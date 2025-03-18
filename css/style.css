@@ -1,0 +1,111 @@
+:root {
+    --C-prim: #01B5B4;
+    --C-sec: #28D5BF;
+    --C-thir: #F99320;
+    --C-cuart: #FE28A3;
+    --C-quint: #99FE00;
+    --C-sex: #E5FF00;
+    
+    --black: #000000;
+    --whi : #f7f7f7;
+    
+    --title1: 3rem;
+    --title2: 2rem;
+}
+
+/* Reset */
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: Helvetica, sans-serif;
+}
+
+/* Selección de texto */
+*::selection {
+    background-color: var(--C-sec);
+    color: var(--whi);
+}
+ 
+*::-moz-selection {
+    background-color: var(--C-sec);
+    color: var(--whi);
+}
+
+/* Barra de navegación */
+.nav-bar {
+    /* border: #000 solid 1px; */
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--C-sec);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+/* Logo */
+.nav-logo {
+    width: 5rem;
+    height: auto;
+    margin-top: .7rem;
+}
+
+/* Contenedor del menú */
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin-top: 4.5rem;
+    width: 100%;
+}
+
+/* Ícono del menú */
+.menu-icon {
+    font-size: 2rem;
+    color: var(--black);
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: transform 0.3s ease;
+}
+
+/* Menú desplegable */
+.menu {
+    position: fixed;
+    top: 5rem; /* Justo debajo de la barra de navegación */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 5rem); /* Ocupa el espacio restante del viewport */
+    background-color: var(--C-sec);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-100%);
+    transition: transform 0.4s ease-in-out;
+}
+
+/* Enlaces del menú */
+.menu a {
+    color: var(--black);
+    text-decoration: none;
+    padding: 1.5rem;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+/* Menú activo */
+.menu.active {
+    transform: translateY(0);
+}
+
+/* Posición del ícono dentro del menú desplegado */
+.menu-container .menu-icon {
+    position: absolute;
+    bottom: 1rem;
+}
