@@ -79,22 +79,16 @@ $(document).ready(function() {
 
     $(".carousel").on("touchend", function(event) {
         let endX = event.originalEvent.changedTouches[0].clientX;
-        if (startX - endX > 50) {
-            if (index < totalCards - 1) {
+        let diffX = startX - endX;  // Diferencia real del swipe
+    
+        if (Math.abs(diffX) > 80) {  // Aumenta el umbral para evitar movimientos dobles
+            if (diffX > 0 && index < totalCards - 1) {
                 index++;
-            } else {
-                index = 0;
-                updateCarousel(false);
-            }
-        } else if (endX - startX > 50) {
-            if (index > 0) {
+            } else if (diffX < 0 && index > 0) {
                 index--;
-            } else {
-                index = totalCards - 1;
-                updateCarousel(false);
             }
+            updateCarousel();
         }
-        updateCarousel();
     });
 
     // Click en indicadores
@@ -106,5 +100,10 @@ $(document).ready(function() {
     // Activar primer indicador
     indicators.eq(0).addClass("active");
 });
+
+
+
+
+//script de la section two
 
 
