@@ -1,14 +1,11 @@
 $(document).ready(function() {
+    // MENÚ DESPLEGABLE
     $(".menu-icon").click(function(event) {
         event.stopPropagation(); // Evita que el clic en el botón se propague al `document`
         $(".menu").toggleClass("active");
 
         let icon = $(this).find("i");
-        if ($(".menu").hasClass("active")) {
-            icon.removeClass("fa-chevron-down").addClass("fa-chevron-up");
-        } else {
-            icon.removeClass("fa-chevron-up").addClass("fa-chevron-down");
-        }
+        icon.toggleClass("fa-chevron-down fa-chevron-up");
     });
 
     // Cerrar el menú si se hace clic fuera de las opciones
@@ -18,56 +15,33 @@ $(document).ready(function() {
             $(".menu-icon i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
         }
     });
-});
 
-
-
-
-
-
-
-$(document).ready(function() {
+    // CARRUSEL
     let index = 0;
     const cards = $(".card");
     const totalCards = cards.length;
+    const carousel = $(".carousel");
+    const indicatorsContainer = $(".carousel-indicators");
 
     // Crear indicadores
-    const indicatorsContainer = $(".carousel-indicators");
     for (let i = 0; i < totalCards; i++) {
         indicatorsContainer.append(`<span data-index="${i}"></span>`);
     }
     const indicators = $(".carousel-indicators span");
 
     function updateCarousel(animated = true) {
-        const carousel = $(".carousel");
-
-        if (animated) {
-            carousel.css("scroll-behavior", "smooth");
-        } else {
-            carousel.css("scroll-behavior", "auto");
-        }
-
+        carousel.css("scroll-behavior", animated ? "smooth" : "auto");
         carousel.scrollLeft(index * carousel.width());
         indicators.removeClass("active").eq(index).addClass("active");
     }
 
     $("#next").click(function() {
-        if (index < totalCards - 1) {
-            index++;
-        } else {
-            index = 0;  // Reinicia al primer servicio sin animación
-            updateCarousel(false);
-        }
+        index = (index + 1) % totalCards; // Movimiento circular
         updateCarousel();
     });
 
     $("#prev").click(function() {
-        if (index > 0) {
-            index--;
-        } else {
-            index = totalCards - 1; // Salta al último servicio sin animación
-            updateCarousel(false);
-        }
+        index = (index - 1 + totalCards) % totalCards; // Movimiento circular
         updateCarousel();
     });
 
@@ -79,13 +53,13 @@ $(document).ready(function() {
 
     $(".carousel").on("touchend", function(event) {
         let endX = event.originalEvent.changedTouches[0].clientX;
-        let diffX = startX - endX;  // Diferencia real del swipe
-    
-        if (Math.abs(diffX) > 80) {  // Aumenta el umbral para evitar movimientos dobles
-            if (diffX > 0 && index < totalCards - 1) {
-                index++;
-            } else if (diffX < 0 && index > 0) {
-                index--;
+        let diffX = startX - endX; // Diferencia real del swipe
+
+        if (Math.abs(diffX) > 80) { // Ajuste del umbral para evitar saltos
+            if (diffX > 0) {
+                index = (index + 1) % totalCards;
+            } else {
+                index = (index - 1 + totalCards) % totalCards;
             }
             updateCarousel();
         }
@@ -100,10 +74,3 @@ $(document).ready(function() {
     // Activar primer indicador
     indicators.eq(0).addClass("active");
 });
-
-
-
-
-//script de la section two
-
-
